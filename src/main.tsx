@@ -3,8 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Landing from "@/pages/Landing";
-import Register from "@/pages/Register";
-import Login from "@/pages/Login";
+import SelectPlan from "@/pages/SelectPlan";
 import Success from "@/pages/Success";
 import Layout from "./components/Layout";
 import Dashboard from "@/pages/Dashboard";
@@ -20,12 +19,8 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
-    path: "/registro",
-    element: <Register />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
+    path: "/select-plan",
+    element: <SelectPlan />,
   },
   {
     path: "/success",

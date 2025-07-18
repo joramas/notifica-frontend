@@ -1,7 +1,11 @@
+"use client";
+
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { RegisterDialog } from "@/components/RegisterDialog";
 import Lottie from "lottie-react";
 import whatsapp_anim from "@/assets/whatsapp.json";
+import { toast, Toaster } from "sonner";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -38,15 +42,16 @@ export default function LandingPage() {
 
           <p className="text-sm text-muted-foreground">
             ¿No tienes cuenta?{" "}
-            <button
-              onClick={() => navigate("/registro")}
-              className="text-primary underline hover:opacity-80 transition"
-            >
-              Regístrate aquí
-            </button>
+            <RegisterDialog
+              onSuccess={(msg, email) =>
+                toast.warning(msg, { description: email, duration: 5000 })
+              }
+              onError={(msg) => toast.error(msg)}
+            />
           </p>
         </div>
       </main>
+      <Toaster richColors position="top-right" />
 
       <footer className="py-4 text-sm text-muted-foreground">
         <p>©2025 ORVITech</p>
