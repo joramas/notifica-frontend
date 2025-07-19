@@ -1,14 +1,27 @@
 "use client";
 
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { RegisterDialog } from "@/components/RegisterDialog";
 import Lottie from "lottie-react";
 import whatsapp_anim from "@/assets/whatsapp.json";
-import { toast, Toaster } from "sonner";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import { LoginDialog } from "@/components/LoginDialog";
 
 export default function LandingPage() {
-  const navigate = useNavigate();
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("verified") === "true") {
+      toast.success("Tu correo ha sido verificado exitosamente", {
+        description: "Ingresa a tu cuenta",
+        duration: 5000,
+      });
+    } else if (params.get("expired") === "true") {
+      toast.error("El link de tu correo ya no es válido.", {
+        description: "En Configuración puedes solictar uno nuevo.",
+        duration: 5000,
+      });
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col justify-between px-6 text-center">
@@ -32,26 +45,28 @@ export default function LandingPage() {
         </div>
 
         <div className="space-y-3">
-          <Button
-            variant={"anim_round"}
-            size="lg"
-            onClick={() => navigate("/login")}
-          >
-            Iniciar sesión
-          </Button>
-
+          <LoginDialog
+            onSuccess={(msg) => {
+              toast.success(msg);
+            }}
+            onError={(msg) => {
+              toast.error(msg);
+            }}
+          />
           <p className="text-sm text-muted-foreground">
             ¿No tienes cuenta?{" "}
             <RegisterDialog
               onSuccess={(msg, email) =>
-                toast.warning(msg, { description: email, duration: 5000 })
+                toast.warning(msg, {
+                  description: email,
+                  duration: 5000,
+                })
               }
               onError={(msg) => toast.error(msg)}
             />
           </p>
         </div>
       </main>
-      <Toaster richColors position="top-right" />
 
       <footer className="py-4 text-sm text-muted-foreground">
         <p>©2025 ORVITech</p>

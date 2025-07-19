@@ -4,13 +4,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Landing from "@/pages/Landing";
 import SelectPlan from "@/pages/SelectPlan";
-import Success from "@/pages/Success";
 import Layout from "./components/Layout";
 import Dashboard from "@/pages/Dashboard";
 import Clients from "@/pages/Clients";
 import Settings from "@/pages/Settings";
 import "./index.css";
-import { AuthProvider } from "./context/auth";
+import { Toaster } from "sonner";
 
 const router = createBrowserRouter([
   // NOTE: Public routes (no Layout)
@@ -21,10 +20,6 @@ const router = createBrowserRouter([
   {
     path: "/select-plan",
     element: <SelectPlan />,
-  },
-  {
-    path: "/success",
-    element: <Success />,
   },
   // NOTE: Authenticated routes (with Layout)
   {
@@ -40,8 +35,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <RouterProvider router={router} />
+    <Toaster richColors position="bottom-right" />
   </StrictMode>,
 );
